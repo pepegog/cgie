@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>csgo_gc Inventory Editor</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #292c3c; --surface: #303446; --surface-v: #414559;
+      --mauve: #ca9ee6; --on-mauve: #232634;
+      --text: #c6d0f5; --text-v: #a5adce; --outline: #737994;
+      --radius: 16px; --elev: 0 8px 24px rgba(0,0,0,.4);
+      --font-android: 'Roboto', system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-android);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .island {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 0 12px 32px 12px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--elev);
+      border: 1px solid var(--outline);
+    }
+    .preview {
+      width: calc(100% - 24px);
+      height: auto;
+      object-fit: contain;
+      margin: 12px 12px 20px 12px;
+      display: block;
+      border-radius: 12px 12px 0 0;
+      background: var(--surface-v);
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+    .btn-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 0 12px;
+    }
+    .btn {
+      background: var(--mauve);
+      color: var(--on-mauve);
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: filter .15s, transform .15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .ripple {
+      position: absolute; border-radius: 50%;
+      background: rgba(35,38,52,.25);
+      transform: scale(0); animation: ripple .4s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+  </style>
+</head>
+<body>
+  <main class="island">
+    <img src="preview.png" alt="Preview" class="preview">
+    <h1 class="title">csgo_gc Inventory Editor</h1>
+    <div class="btn-row">
+      <a class="btn" href="https://github.com/BlathanAevon" target="_blank" rel="noopener">Original Website Author</a>
+      <a class="btn" href="csgogcinvedit.exe">Download</a>
+      <a class="btn" href="https://github.com/pepegog" target="_blank" rel="noopener">Me, Local Electron version</a>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = `${e.clientX - rect.left}px`;
+        ripple.style.top = `${e.clientY - rect.top}px`;
+        ripple.style.width = ripple.style.height = '20px';
+        btn.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 400);
+      });
+    });
+  </script>
+</body>
+</html>
